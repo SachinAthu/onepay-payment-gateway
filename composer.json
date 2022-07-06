@@ -1,0 +1,21 @@
+{
+    "name": "sachinathu/onepay-payment-gateway",
+    "description": "Pop up onepay payment gateway in amodal",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sachin Athu",
+            "email": "sachin2262716@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Gateway\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "7.4.x-dev"
+    }
+}
