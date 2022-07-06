@@ -11,10 +11,10 @@
     use GuzzleHttp\Exception\ClientException;
     use GuzzleHttp\Exception\ServerException;
 
-    use IframeModal\Data;
-    use IframeModal\Modal;
+    use Gateway\Modal;
     
     class Index {
+        private $base_uri = 'https://merchant-api-live-v2.onepay.lk/api/';
         private $request_data;
         private $options;
 
@@ -49,7 +49,7 @@
 
             // get payment gateway redirect url
             try {
-                $client = new Client(['base_uri' => Data::$BASE_URI]);
+                $client = new Client(['base_uri' => $this->base_uri]);
                 $res = $client->get(
                     "ipg/gateway/request-transaction/?hash={$this->request_data['params']['hash']}",
                     [
