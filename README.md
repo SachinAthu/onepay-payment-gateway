@@ -1,1 +1,1 @@
-# PHP Composer package to generate iframe inside a modal for given url.
+# PHP package to redirect to onepay payment gateway inside a popup modal.
