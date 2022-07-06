@@ -1,6 +1,6 @@
 {
     "name": "sachinathu/onepay-payment-gateway",
-    "description": "Pop up onepay payment gateway in amodal",
+    "description": "Pop up onepay payment gateway in a modal",
     "type": "library",
     "license": "MIT",
     "authors": [
