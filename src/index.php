@@ -63,7 +63,7 @@
                 if($res_body['status'] === 1000) {
                     // show iframe modal
                     $modal = new Modal($res_body['data'], $this->options);
-                    $modal->generateModal();
+                    $modal->generate();
                 } 
                 return $this->sendResponse($res_body);
             } 
@@ -83,45 +83,43 @@
                 // echo 'Internal Server Error!';
             } 
 
+        }
 
+
+        /**
+         * return success and error 
+         * 
+         * @param array  $res_body  response body of requesting payment gateway redirect url
+         * 
+         * @return array
+         */
+        private function sendResponse($res_body = null) {
+            // var_dump($res_body);
+
+            if(!$res_body) {
+                return [
+                    'status'=>'failed',
+                    'message'=>'Internal Server Error!'
+                ];
             }
 
-
-             /**
-             * return success and error 
-             * 
-             * @param array  $res_body  response body of requesting payment gateway redirect url
-             * 
-             * @return array
-             */
-            private function sendResponse($res_body = null) {
-                // var_dump($res_body);
-
-                if(!$res_body) {
+            if(array_key_exists('status_code', $res_body)) {
+                return [
+                    'status'=>'failed',
+                    'message'=>'Internal Server Error!'
+                ];
+            } else {
+                if($res_body['status'] === 1000) {
                     return [
-                        'status'=>'failed',
-                        'message'=>'Internal Server Error!'
-                    ];
-                }
-
-                if(array_key_exists('status_code', $res_body)) {
-                    return [
-                        'status'=>'failed',
-                        'message'=>'Internal Server Error!'
-                    ];
-                } else {
-                    if($res_body['status'] === 1000) {
-                        return [
-                            'status'=>'success',
-                            'message'=>$res_body['message']
-                        ];
-                    }
-                    return [
-                        'status'=>'failed',
+                        'status'=>'success',
                         'message'=>$res_body['message']
                     ];
                 }
+                return [
+                    'status'=>'failed',
+                    'message'=>$res_body['message']
+                ];
             }
+        }
 
-           
     }
