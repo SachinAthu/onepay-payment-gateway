@@ -15,18 +15,19 @@
     
     class Index {
         private $base_uri = 'https://merchant-api-live-v2.onepay.lk/api/';
-        private $request_data;
+        private $hash = 'fa911c0b4d6167bfab1e50ce084e38da4361838c9cd78ac99a20df0992d87360';
+        private $data;
         private $options;
 
 
         /**
          * @return none
          * 
-         * @param array  $request_data    request data to get the payment gateway redirect url
+         * @param array  $data    request data to get the payment gateway redirect url
          * @param array $options  options for iframe modal (UI options, theme)
         */
-        public function __construct($request_data, $options) {
-            $this->request_data = $request_data;
+        public function __construct($data, $options) {
+            $this->data = $data;
             $this->options = $options;
         }
 
@@ -49,12 +50,24 @@
 
             // get payment gateway redirect url
             try {
-                $client = new Client(['base_uri' => $this->base_uri]);
+                $client = new Client(['base_uri'=> $this->base_uri]);
                 $res = $client->get(
-                    "ipg/gateway/request-transaction/?hash={$this->request_data['params']['hash']}",
+                    "ipg/gateway/request-transaction/?hash={$this->hash}",
                     [
-                        'headers' => $this->request_data['headers'],
-                        'json' => $this->request_data['body']
+                        'headers' => [
+                            'Content-Type'=> 'application/json',
+                            'Authorization'=> $this->data['Authorization']
+                        ],
+                        'json' => [
+                            'amount'=> $this->data['amount'],
+                            'app_id'=> $this->data['app_id'],
+                            'reference'=> $this->data['reference'],
+                            'customer_first_name'=> $this->data['customer_first_name'],
+                            'customer_last_name'=> $this->data['customer_last_name'], 
+                            'customer_phone_number'=> $this->data['customer_phone_number'],
+                            'customer_email'=> $this->data['customer_email'], 
+                            'transaction_redirect_url'=> $this->data['transaction_redirect_url'],
+                        ],
                     ]
                 );
                 // $res_status = $res->getStatusCode();
